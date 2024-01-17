@@ -1,5 +1,4 @@
 import {Router} from "express";
-import crypto from "crypto";
 const productsRouter = Router();
 import fileDB from "../fileDB";
 import {ProductWithoutId} from "../types";
