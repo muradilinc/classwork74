@@ -2,7 +2,8 @@ import express from 'express';
 import productsRouter from "./routers/products";
 import fileDB from "./fileDB";
 import cors from 'cors';
-import mongoDb from "./mongoDb";
+import mongoose from 'mongoose';
+import config from "./config";
 
 const app = express();
 const port = 8000;
@@ -15,13 +16,15 @@ app.use('/products', productsRouter);
 
 const run = async () => {
   await fileDB.init();
-  await mongoDb.connect();
+  await mongoose.connect(config.mongoose.db);
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
   });
+
   process.on('exit', () => {
-    mongoDb.disconnect();
+    mongoose.disconnect();
+    console.log('disconnected');
   });
 };
 
