@@ -1,14 +1,15 @@
 import {Router} from "express";
 const productsRouter = Router();
 import fileDB from "../fileDB";
-import {ProductWithoutId} from "../types";
+import {ProductMutation} from "../types";
 import {imageUpload} from "../multer";
 import Product from "../models/products";
-import {ObjectId, Types} from "mongoose";
+import mongoose, {ObjectId, Types} from "mongoose";
 
 productsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
   try {
-    const productData: ProductWithoutId = {
+    const productData: ProductMutation = {
+      category: req.body.category,
       title: req.body.title,
       price: parseFloat(req.body.price),
       description: req.body.description,
@@ -21,13 +22,16 @@ productsRouter.post('/', imageUpload.single('image'), async (req, res, next) => 
     await product.save();
     res.send(productData);
   } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      return res.send(422).send(error.message);
+    }
     return next(error);
   }
 });
 
-productsRouter.get('/',  async (req, res) => {
+productsRouter.get('/',  async (_req, res) => {
   const products = await fileDB.getItems();
-  const results = await Product.find();
+  const results = await Product.find().populate('category', 'title description');
   res.send(results);
 });
 
