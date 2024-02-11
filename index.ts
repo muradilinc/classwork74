@@ -1,6 +1,6 @@
 import express from 'express';
 import productsRouter from "./routers/products";
-import fileDB from "./fileDB";
+// import fileDB from "./fileDB";
 import cors from 'cors';
 import mongoose from 'mongoose';
 import config from "./config";
@@ -17,7 +17,7 @@ app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 
 const run = async () => {
-  await fileDB.init();
+  // await fileDB.init();
   await mongoose.connect(config.mongoose.db);
 
   app.listen(port, () => {

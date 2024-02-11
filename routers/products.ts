@@ -1,6 +1,6 @@
 import {Router} from "express";
 const productsRouter = Router();
-import fileDB from "../fileDB";
+// import fileDB from "../fileDB";
 import {ProductMutation} from "../types";
 import {imageUpload} from "../multer";
 import Product from "../models/products";
@@ -16,7 +16,7 @@ productsRouter.post('/', imageUpload.single('image'), async (req, res, next) => 
       image: req.file ? req.file.filename : null,
     };
 
-    const newProduct = await fileDB.addItem(productData);
+    // const newProduct = await fileDB.addItem(productData);
 
     const product = new Product(productData);
     await product.save();
@@ -30,7 +30,7 @@ productsRouter.post('/', imageUpload.single('image'), async (req, res, next) => 
 });
 
 productsRouter.get('/',  async (_req, res) => {
-  const products = await fileDB.getItems();
+  // const products = await fileDB.getItems();
   const results = await Product.find().populate('category', 'title description');
   res.send(results);
 });
@@ -43,8 +43,8 @@ productsRouter.get('/:id', async (req, res, next) => {
     } catch {
       return res.status(404).send({error: 'Wrong objectID'});
     }
-    const products = await fileDB.getItems();
-    const product = products.find(p => p.id === req.params.id);
+    // const products = await fileDB.getItems();
+    // const product = products.find(p => p.id === req.params.id);
     const result = await Product.findOne({_id});
     res.send(result);
   } catch (error) {
