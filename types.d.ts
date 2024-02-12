@@ -5,3 +5,8 @@ export interface ProductMutation {
   description: string;
   image: string | null;
 }
+
+export interface UserFields {
+  username: string;
+  password: string;
+}

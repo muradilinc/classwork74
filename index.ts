@@ -5,6 +5,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import config from "./config";
 import categoriesRouter from "./routers/categories";
+import usersRouter from "./routers/users";
 
 const app = express();
 const port = 8000;
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
+app.use('/users', usersRouter);
 
 const run = async () => {
   // await fileDB.init();

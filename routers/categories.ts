@@ -16,7 +16,7 @@ categoriesRouter.post('/', async (req, res, next) => {
     return res.send(category);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
-      return res.send(422).send(error.message);
+      return res.status(422).send(error.message);
     }
     if (error instanceof mongo.MongoServerError && error.code === 11000) {
       return res.status(422).send(error.message);
