@@ -1,12 +1,13 @@
+import {randomUUID} from "crypto";
 import mongoose from "mongoose";
-import {UserFields} from "../types";
+import {UserFields, UserMethods, UserModel} from "../types";
 import bcrypt from 'bcrypt';
 
 const SALT_WORK_FACTOR = 10;
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema<UserFields>({
+const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
   username: {
     type: String,
     required: true,
@@ -16,7 +17,19 @@ const UserSchema = new Schema<UserFields>({
     type: String,
     required: true,
   },
+  token: {
+    type: String,
+    required: true,
+  },
 });
+
+UserSchema.methods.checkPassword = function (password: string) {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.methods.generateToken = function () {
+  this.token = randomUUID()
+}
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
@@ -28,6 +41,13 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', UserSchema);
+UserSchema.set('toJSON', {
+  transform: (doc, ret, options) =>{
+    delete ret.password;
+    return ret;
+  }
+});
+
+const User = mongoose.model<UserFields, UserModel>('User', UserSchema);
 
 export default User;
