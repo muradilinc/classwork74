@@ -1,4 +1,4 @@
-import {Model} from "mongoose";
+import { Model } from 'mongoose';
 
 export interface ProductMutation {
   category: string;
@@ -15,8 +15,8 @@ export interface UserFields {
 }
 
 export interface UserMethods {
-  checkPassword(password: string): Promise<Boolean>;
+  checkPassword(password: string): Promise<boolean>;
   generateToken(): void;
 }
 
-type UserModel = Model<UserFields, {}, UserMethods>;
+type UserModel = Model<UserFields, unknown, UserMethods>;

@@ -1,4 +1,4 @@
-import {promises as fs} from 'fs';
+import { promises as fs } from 'fs';
 
 const fileName = './text.txt';
 const run = async () => {

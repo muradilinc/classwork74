@@ -1,6 +1,6 @@
-import {Router} from "express";
-import Category from "../models/Category";
-import mongoose, {mongo} from "mongoose";
+import { Router } from 'express';
+import Category from '../models/Category';
+import mongoose, { mongo } from 'mongoose';
 
 const categoriesRouter = Router();
 

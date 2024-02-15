@@ -1,11 +1,11 @@
 import express from 'express';
-import productsRouter from "./routers/products";
+import productsRouter from './routers/products';
 // import fileDB from "./fileDB";
 import cors from 'cors';
 import mongoose from 'mongoose';
-import config from "./config";
-import categoriesRouter from "./routers/categories";
-import usersRouter from "./routers/users";
+import config from './config';
+import categoriesRouter from './routers/categories';
+import usersRouter from './routers/users';
 
 const app = express();
 const port = 8000;
